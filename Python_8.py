@@ -1,0 +1,60 @@
+import sqlite3
+conn=sqlite3.connect("stud69.db")
+def create():
+    print("Opened database successfully")
+    print("Table creation:")
+    conn.execute('''CREATE TABLE if not exists std69(ID INT PRIMARY KEY NOT NULL,
+                 NAME TEXT NOT NULL,
+                 SEM INT NOT NULL,
+                 DEPT CHAR(25));''')
+    print("Table created successfully")
+def insert():
+    print("Inserting student information:")
+    conn.execute("INSERT INTO std69(ID,NAME,SEM,DEPT)VALUES(1,'riya',5,'CSE')")
+    conn.execute("INSERT INTO std69(ID,NAME,SEM,DEPT)VALUES(2,'ira',6,'ECE')")
+    conn.execute("INSERT INTO std69(ID,NAME,SEM,DEPT)VALUES(3,'siya',5,'EEE')")
+    conn.execute("INSERT INTO std69(ID,NAME,SEM,DEPT)VALUES(4,'ana',4,'MECH')")
+    conn.commit()
+    print("Values inserted successfully","\t")
+def display():
+    print("Displays student information:")
+    cursor=conn.execute("SELECT * from std69")
+    print("Table contents are:")
+    for row in cursor:
+        print("ID=",row[0])
+        print("NAME=",row[1])
+        print("SEM=",row[2])
+        print("DEPT=",row[3])
+        print("---------------------------------------")
+    conn.commit()
+def query():
+    print("Retrives data of specific student")
+    cursor=conn.execute("SELECT * from std69 where ID=1")
+    conn.commit()
+    print("Query result:")
+    res=cursor.fetchall()
+    print(res)
+def update():
+    print("Updating student information:")
+    conn.execute("UPDATE std69 SET SEM=3 where ID=3")
+    conn.commit()
+    print("Upadted table contents are:")
+    cursor=conn.execute("SELECT * from std69")
+    res=cursor.fetchall()
+    print(res)
+    print("Updated successfully")
+def delete():
+    print("Deleting particular student data:")
+    conn.execute("DELETE from std69 where ID=4")
+    conn.commit()
+    cursor=conn.execute("SELECT * from std69")
+    print("The table contents after deletion are:")
+    res=cursor.fetchall()
+    print(res)
+    print("Deleted successfully")
+create()
+insert()
+display()
+query()
+update()
+delete()
